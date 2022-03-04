@@ -23,8 +23,7 @@ public class Library {
     //добавить новую книгу
     public void add(String name, String author, String genre, String shelf) {
         Book trial = new Book(name, author, genre, shelf);
-        int index = Library.indexOf(trial);
-        if (index == -1)
+        if (!Library.contains(trial))
             Library.add(trial);
     }
     //удалить книгу
@@ -68,15 +67,12 @@ public class Library {
     }
     //поиск книги по разным признакам
     public Book search(String name, String author, String genre, String shelf) {
-        int index = -1;
         for (int i = 0; i < Library.size(); i += 1) {
             if (((name.equals(Library.get(i).name)) || (name.isEmpty())) && ((author.equals(Library.get(i).author)) ||
                     (author.isEmpty())) && ((genre.equals(Library.get(i).genre)) || (genre.isEmpty())) &&
                     ((shelf.equals(Library.get(i).shelf))) || (shelf.isEmpty()))
-                index = i;
+                return Library.get(i);
         }
-        if (index != -1)
-            return Library.get(index);
-        else return new Book("","", "", "");
+        return new Book("","", "", "");
     }
 }
