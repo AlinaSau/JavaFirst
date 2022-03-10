@@ -1,15 +1,29 @@
 import java.util.ArrayList;
 
 class Book {
-    String name;
-    String author;
-    String genre;
-    String shelf;
+    public String name;
+    public String author;
+    public String genre;
+    public String shelf;
 
     public Book (String name, String author, String genre, String shelf) {
         this.name = name;
         this.author = author;
         this.genre = genre;
+        this.shelf = shelf;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+    public void setShelf(String shelf) {
         this.shelf = shelf;
     }
 }
@@ -20,59 +34,59 @@ public class Library {
     public static void main(String[] args) {
 
     }
-    //добавить новую книгу
-    public void add(String name, String author, String genre, String shelf) {
-        Book trial = new Book(name, author, genre, shelf);
-        if (!Library.contains(trial))
-            Library.add(trial);
-    }
-    //удалить книгу
-    public void delete(String name, String author, String genre, String shelf) {
-        Book trial = new Book(name, author, genre, shelf);
+    public void addBook(String name, String author, String genre, String shelf) {
+        Book trialBook = new Book(name, author, genre, shelf);
+        if (Library.size() == 0) Library.add(trialBook);
         for (int i = 0; i < Library.size(); i += 1)
-            if ((trial.name.equals(Library.get(i).name)) && (trial.author.equals(Library.get(i).author)) &&
-                    (trial.genre.equals(Library.get(i).genre)) && (trial.shelf.equals(Library.get(i).shelf)))
+            if ((trialBook.name.equals(Library.get(i).name)) && (trialBook.author.equals(Library.get(i).author)) &&
+                    (trialBook.genre.equals(Library.get(i).genre)) && (trialBook.shelf.equals(Library.get(i).shelf)))
+                break;
+            else
+                Library.add(trialBook);
+    }
+
+    public void deleteBook(String name, String author, String genre, String shelf) {
+        Book trialBook = new Book(name, author, genre, shelf);
+        for (int i = 0; i < Library.size(); i += 1)
+            if ((trialBook.name.equals(Library.get(i).name)) && (trialBook.author.equals(Library.get(i).author)) &&
+                    (trialBook.genre.equals(Library.get(i).genre)) && (trialBook.shelf.equals(Library.get(i).shelf)))
                 Library.remove(Library.get(i));
     }
-    //изменить существующую книгу
-    public void change(Book later, String name, String author, String genre, String shelf) {
-        String nameBook = later.name;
-        String authorBook = later.author;
-        String genreBook = later.genre;
-        String shelfBook = later.shelf;
+
+    public void changeBook(String laterName, String laterAuthor, String laterGenre, String laterShelf, String name, String author, String genre, String shelf) {
+        Book laterVersionBook = new Book(laterName, laterAuthor, laterGenre, laterShelf);
         for (int i = 0; i < Library.size(); i += 1)
-            if (((later.name.equals(Library.get(i).name)) && (later.author.equals(Library.get(i).author)) &&
-                    (later.genre.equals(Library.get(i).genre)) && (later.shelf.equals(Library.get(i).shelf)))) {
-                if (!(name.isEmpty() || name.equals(" ")))
-                    nameBook = name;
-                if (!(author.isEmpty() || author.equals(" ")))
-                    authorBook = author;
-                if (!(genre.isEmpty() || genre.equals(" ")))
-                    genreBook = genre;
-                if (!(shelf.isEmpty() || shelf.equals(" ")))
-                    shelfBook = shelf;
-                Book update = new Book(nameBook, authorBook, genreBook, shelfBook);
-                Library.set(i, update);
+            if (((laterVersionBook.name.equals(Library.get(i).name)) && (laterVersionBook.author.equals(Library.get(i).author)) &&
+                    (laterVersionBook.genre.equals(Library.get(i).genre)) && (laterVersionBook.shelf.equals(Library.get(i).shelf)))) {
+                if (!(name.isEmpty() || name.trim().length() == 0))
+                    laterVersionBook.setName(name);
+                if (!(author.isEmpty() || author.trim().length() == 0))
+                    laterVersionBook.setAuthor(author);
+                if (!(genre.isEmpty() || genre.trim().length() == 0))
+                    laterVersionBook.setGenre(genre);
+                if (!(shelf.isEmpty() || shelf.trim().length() == 0))
+                    laterVersionBook.setShelf(shelf);
+                Library.set(i, laterVersionBook);
             }
     }
-    //переместить книгу на другую полку
-    public void move(Book later, String newShelf) {
-        Book sh = new Book(later.name, later.author, later.genre, later.shelf);
+
+    public void moveBook(String name, String author, String genre, String shelf, String newShelf) {
+        Book trialBook = new Book(name, author, genre, shelf);
         for (int i = 0; i< Library.size(); i += 1)
-            if ((sh.name.equals(Library.get(i).name)) && (sh.author.equals(Library.get(i).author)) &&
-                    (sh.genre.equals(Library.get(i).genre)) && (sh.shelf.equals(Library.get(i).shelf))) {
-                Book up = new Book(sh.name, sh.author, sh.genre, newShelf);
-                Library.set(i, up);
+            if ((trialBook.name.equals(Library.get(i).name)) && (trialBook.author.equals(Library.get(i).author)) &&
+                    (trialBook.genre.equals(Library.get(i).genre)) && (trialBook.shelf.equals(Library.get(i).shelf))) {
+                trialBook.setShelf(newShelf);
+                Library.set(i, trialBook);
             }
     }
-    //поиск книги по разным признакам
-    public Book search(String name, String author, String genre, String shelf) {
+
+    public Book searchBook(String name, String author, String genre, String shelf) {
         for (int i = 0; i < Library.size(); i += 1) {
             if (((name.equals(Library.get(i).name)) || (name.isEmpty())) && ((author.equals(Library.get(i).author)) ||
                     (author.isEmpty())) && ((genre.equals(Library.get(i).genre)) || (genre.isEmpty())) &&
                     ((shelf.equals(Library.get(i).shelf))) || (shelf.isEmpty()))
                 return Library.get(i);
         }
-        return new Book("","", "", "");
+        return new Book("", "", "","");
     }
 }
