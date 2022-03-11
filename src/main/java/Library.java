@@ -1,25 +1,31 @@
 import java.util.ArrayList;
 
-class Book {
+public class Library {
+    public ArrayList<Book> Library = new ArrayList<>();
+
+    public static void main(String[] args) {
+
+    }
+
+static class Book {
     public String name;
     public String author;
     public String genre;
     public String shelf;
 
-    public Book (String name, String author, String genre, String shelf) {
+    private Book (String name, String author, String genre, String shelf) {
         this.name = name;
         this.author = author;
         this.genre = genre;
         this.shelf = shelf;
     }
+
     public void setName(String name) {
         this.name = name;
     }
-
     public void setAuthor(String author) {
         this.author = author;
     }
-
     public void setGenre(String genre) {
         this.genre = genre;
     }
@@ -28,12 +34,6 @@ class Book {
     }
 }
 
-public class Library {
-    public ArrayList<Book> Library = new ArrayList<>();
-
-    public static void main(String[] args) {
-
-    }
     public void addBook(String name, String author, String genre, String shelf) {
         Book trialBook = new Book(name, author, genre, shelf);
         if (Library.size() == 0) Library.add(trialBook);
@@ -81,11 +81,11 @@ public class Library {
     }
 
     public Book searchBook(String name, String author, String genre, String shelf) {
-        for (int i = 0; i < Library.size(); i += 1) {
-            if (((name.equals(Library.get(i).name)) || (name.isEmpty())) && ((author.equals(Library.get(i).author)) ||
-                    (author.isEmpty())) && ((genre.equals(Library.get(i).genre)) || (genre.isEmpty())) &&
-                    ((shelf.equals(Library.get(i).shelf))) || (shelf.isEmpty()))
-                return Library.get(i);
+        for (Book book : Library) {
+            if (((name.equals(book.name)) || (name.isEmpty())) && ((author.equals(book.author)) ||
+                    (author.isEmpty())) && ((genre.equals(book.genre)) || (genre.isEmpty())) &&
+                    ((shelf.equals(book.shelf))) || (shelf.isEmpty()))
+                return book;
         }
         return new Book("", "", "","");
     }

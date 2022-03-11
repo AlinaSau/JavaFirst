@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 public class LibraryTest {
 
     @Test
-    public void addBook() throws Exception {
+    public void addBook() {
         Library lib = new Library();
         lib.addBook("Униженнные и оскорбленные", "Фёдор Михайлович Достоевский", "Роман", "Р1");
         assertEquals("Униженнные и оскорбленные Фёдор Михайлович Достоевский Роман Р1", lib.Library.get(0).name + " " + lib.Library.get(0).author + " " +
@@ -13,7 +13,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void addRecurringBook() throws Exception {
+    public void addRecurringBook() {
         Library lib = new Library();
         lib.addBook("Униженнные и оскорбленные", "Фёдор Михайлович Достоевский", "Роман", "Р1");
         lib.addBook("Униженнные и оскорбленные", "Фёдор Михайлович Достоевский", "Роман", "Р1");
@@ -24,7 +24,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void deleteBook() throws Exception {
+    public void deleteBook() {
         Library lib = new Library();
         lib.addBook("Униженнные и оскорбленные", "Фёдор Михайлович Достоевский", "Роман", "Р1");
         lib.addBook("Маленький принц", "Антуан де Сент-Экзюпери", "Сказка", "С1");
@@ -34,7 +34,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void deleteNonExistentBook() throws Exception {
+    public void deleteNonExistentBook() {
         Library lib = new Library();
         lib.addBook("Униженнные и оскорбленные", "Фёдор Михайлович Достоевский", "Роман", "Р1");
         lib.addBook("Маленький принц", "Антуан де Сент-Экзюпери", "Сказка", "С1");
@@ -46,7 +46,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void changeBook() throws Exception {
+    public void changeBook() {
         Library lib = new Library();
         lib.addBook("Униженные и оскорбленные", "Фёдор Достоевский", "Роман", "Р1");
         lib.addBook("Маленький принц", "Антуан де Сент-Экзюпери", "Сказка", "С1");
@@ -57,7 +57,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void moveBook() throws Exception {
+    public void moveBook() {
         Library lib = new Library();
         lib.addBook("Униженнные и оскорбленные", "Фёдор Михайлович Достоевский", "Роман", "Р1");
         lib.addBook("Маленький принц", "Антуан де Сент-Экзюпери", "Сказка", "С1");
@@ -66,21 +66,21 @@ public class LibraryTest {
     }
 
     @Test
-    public void searchBook() throws Exception {
+    public void searchBook() {
         Library lib = new Library();
         lib.addBook("Обняться, чтобы уцелеть", "Олег Рой", "Мистика", "М7");
         lib.addBook("Это началось не с тебя", "Марк Уолинн", "Психология", "П4");
         lib.addBook("Маленький принц", "Антуан де Сент-Экзюпери", "Сказка", "С3");
-        Book last = lib.searchBook("", "Антуан де Сент-Экзюпери", "", "С3");
+        Library.Book last = lib.searchBook("", "Антуан де Сент-Экзюпери", "", "С3");
         assertEquals("Маленький принц Антуан де Сент-Экзюпери Сказка С3", last.name + " " + last.author + " " + last.genre + " " + last.shelf);
     }
 
     @Test
-    public void searchForNonExistentBook() throws Exception {
+    public void searchForNonExistentBook() {
         Library lib = new Library();
         lib.addBook("Обняться, чтобы уцелеть", "Олег Рой", "Мистика", "М7");
         lib.addBook("Это началось не с тебя", "Марк Уолинн", "Психология", "П4");
-        Book last = lib.searchBook("Униженные и оскорбленные", "", "Роман", "");
+        Library.Book last = lib.searchBook("Униженные и оскорбленные", "", "Роман", "");
         assertEquals("", "");
     }
 }
