@@ -13,23 +13,23 @@ static class Book {
     public String genre;
     public String shelf;
 
-    private Book (String name, String author, String genre, String shelf) {
+    private Book(String name, String author, String genre, String shelf) {
         this.name = name;
         this.author = author;
         this.genre = genre;
         this.shelf = shelf;
     }
 
-    public void setName(String name) {
+    private void setName(String name) {
         this.name = name;
     }
-    public void setAuthor(String author) {
+    private void setAuthor(String author) {
         this.author = author;
     }
-    public void setGenre(String genre) {
+    private void setGenre(String genre) {
         this.genre = genre;
     }
-    public void setShelf(String shelf) {
+    private void setShelf(String shelf) {
         this.shelf = shelf;
     }
 }
@@ -37,19 +37,14 @@ static class Book {
     public void addBook(String name, String author, String genre, String shelf) {
         Book trialBook = new Book(name, author, genre, shelf);
         if (Library.size() == 0) Library.add(trialBook);
-        for (int i = 0; i < Library.size(); i += 1)
-            if ((trialBook.name.equals(Library.get(i).name)) && (trialBook.author.equals(Library.get(i).author)) &&
-                    (trialBook.genre.equals(Library.get(i).genre)) && (trialBook.shelf.equals(Library.get(i).shelf)))
-                break;
-            else
-                Library.add(trialBook);
+        for (int i = 0; i < Library.size(); i +=1)
+            if (!equalsBook(trialBook, Library.get(i))) Library.add(trialBook);
     }
 
     public void deleteBook(String name, String author, String genre, String shelf) {
         Book trialBook = new Book(name, author, genre, shelf);
         for (int i = 0; i < Library.size(); i += 1)
-            if ((trialBook.name.equals(Library.get(i).name)) && (trialBook.author.equals(Library.get(i).author)) &&
-                    (trialBook.genre.equals(Library.get(i).genre)) && (trialBook.shelf.equals(Library.get(i).shelf)))
+            if (equalsBook(trialBook, Library.get(i)))
                 Library.remove(Library.get(i));
     }
 
@@ -82,11 +77,15 @@ static class Book {
 
     public Book searchBook(String name, String author, String genre, String shelf) {
         for (Book book : Library) {
-            if (((name.equals(book.name)) || (name.isEmpty())) && ((author.equals(book.author)) ||
-                    (author.isEmpty())) && ((genre.equals(book.genre)) || (genre.isEmpty())) &&
-                    ((shelf.equals(book.shelf))) || (shelf.isEmpty()))
+            if (((name.equals(book.name)) || (name.isBlank())) && ((author.equals(book.author)) ||
+                    (author.isBlank())) && ((genre.equals(book.genre)) || (genre.isBlank())) &&
+                    ((shelf.equals(book.shelf))) || (shelf.isBlank()))
                 return book;
         }
-        return new Book("", "", "","");
+        return new Book(null, null, null,null);
+    }
+    private boolean equalsBook(Book first, Book second) {
+        return first.name.equals(second.name) && first.author.equals(second.author) && first.genre.equals(second.genre) &&
+                first.shelf.equals(second.shelf);
     }
 }
